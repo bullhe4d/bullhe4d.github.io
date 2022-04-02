@@ -5,17 +5,33 @@
     <loc>https://blog.diudiu.love/</loc>
     <lastmod>2022-04-02T09:59:14+08:00</lastmod>
   </url><url>
+    <loc>https://blog.diudiu.love/categories/</loc>
+    <lastmod>2022-04-02T09:59:14+08:00</lastmod>
+  </url><url>
     <loc>https://blog.diudiu.love/post/</loc>
+    <lastmod>2022-04-02T09:59:14+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.diudiu.love/tags/redis/</loc>
+    <lastmod>2022-04-02T09:59:14+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.diudiu.love/categories/redis/</loc>
+    <lastmod>2022-04-02T09:59:14+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.diudiu.love/tags/</loc>
     <lastmod>2022-04-02T09:59:14+08:00</lastmod>
   </url><url>
     <loc>https://blog.diudiu.love/post/redis/ms1/</loc>
     <lastmod>2022-04-02T09:59:14+08:00</lastmod>
   </url><url>
+    <loc>https://blog.diudiu.love/tags/%E9%9D%A2%E8%AF%95/</loc>
+    <lastmod>2022-04-02T09:59:14+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.diudiu.love/categories/golang/</loc>
+    <lastmod>2022-04-02T09:56:44+08:00</lastmod>
+  </url><url>
     <loc>https://blog.diudiu.love/post/golang/gmp/</loc>
     <lastmod>2022-04-02T09:56:44+08:00</lastmod>
   </url><url>
-    <loc>https://blog.diudiu.love/categories/</loc>
-  </url><url>
-    <loc>https://blog.diudiu.love/tags/</loc>
+    <loc>https://blog.diudiu.love/series/</loc>
   </url>
 </urlset>

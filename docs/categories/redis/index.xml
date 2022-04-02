@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Redis on Bullhead‘s blog</title>
+    <link>https://blog.diudiu.love/categories/redis/</link>
+    <description>Recent content in Redis on Bullhead‘s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 02 Apr 2022 09:59:14 +0800</lastBuildDate><atom:link href="https://blog.diudiu.love/categories/redis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如果在生产环境中有千万级的key，如果想模糊查询应该用什么命令？</title>
+      <link>https://blog.diudiu.love/post/redis/ms1/</link>
+      <pubDate>Sat, 02 Apr 2022 09:59:14 +0800</pubDate>
+      
+      <guid>https://blog.diudiu.love/post/redis/ms1/</guid>
+      <description>当时想当然的就回答用keys *结果踩了大坑，keys算法是遍历算法，复杂度是 O(n)，如果实例中有千万级以上的 key，这个指令就会导致 Redis 服务卡顿，所有读写Redis的其它的指令都会被延后甚至会超时报错.
+应该使用Scan
+scan特点：
+1、复杂度和keys命令一样，也是 O(n)，但是它是通过游标分步进行的，不会阻塞线程
+2、提供limit参数，可以控制每次返回结果的最大条数，这里是最大条数，而不是等于limit的条数，因为是匹配查询，是在limit的范围内匹配查询
+3、返回的结果可能会有重复
+4、遍历的过程中如果有数据修改，改动后的数据能不能遍历到是不确定的;
+5、单次返回的结果是空的并不意味着遍历结束，而要看返回的游标值是否为零;</description>
+    </item>
+    
+  </channel>
+</rss>
