@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html lang="zh-cn">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  
+  <title>channel实现 - Bullhead</title>
+
+  
+  
+  <meta name="description" content="底层结构 ch :=make(chan int ,5),因为channle 是引用类型，所以 make ，然后 ch（在栈）存的是一个指针地址，指针指向 堆上的hChan结构体，
+hchan结构体包含如下结构
+type hchan struct {  qcount uint // total data in the queue	//缓冲区已经存了多少个元素  dataqsiz uint // size of the circular queue	//环形队列的大小  buf unsafe.Pointer // points to an array of dataqsiz elements 缓冲区在内存的指针位置（一个数组）  elemsize uint16	//	//每个元素占多大空间  closed uint32	//	关闭状态  elemtype *_type // element type	//通道中的元素类型 指向类型指针  sendx uint // send index	//	目前数组里写的下表  recvx uint // receive index	//	目前数组里读的下表  recvq waitq // list of recv waiters	//读的等待队列	 sendq waitq // list of send waiters	//写的等待队列	sudog   // lock protects all fields in hchan, as well as several  // fields in sudogs blocked on this channel." />
+  <meta name="author" content="" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="http://localhost:1313/app.min.css" />
+
+  
+  <link rel="preload stylesheet" as="style" href="http://localhost:1313/an-old-hope.min.css" />
+  <script
+    defer
+    src="http://localhost:1313/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+  <link rel="preload" as="image" href="http://localhost:1313/theme.png" />
+
+  
+  <link rel="preload" as="image" href="http://localhost:1313/github.svg" />
+  
+
+  
+  <link rel="icon" href="http://localhost:1313/favicon.ico" />
+  <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.94.1" />
+
+  
+  
+
+  
+  
+</head>
+
+
+  <body class="not-ready" data-menu="true">
+    <header class="header">
+  
+  <p class="logo">
+    <a class="site-name" href="http://localhost:1313/">Bullhead</a><a class="btn-dark"></a>
+  </p>
+  
+
+  <script>
+    let bodyClx = document.body.classList;
+    let btnDark = document.querySelector('.btn-dark');
+    let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+    let darkVal = localStorage.getItem('dark');
+
+    let setDark = (isDark) => {
+      bodyClx[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark ? 'yes' : 'no');
+    };
+
+    setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+    requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+    btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+    sysDark.addEventListener('change', (event) => setDark(event.matches));
+  </script>
+
+  
+  
+  <nav class="menu">
+    
+    <a class="" href="/about/">关于</a>
+    
+  </nav>
+  
+
+  
+  <nav class="social">
+    
+    <a
+      class="github"
+      style="--url: url(./github.svg)"
+      href="https://github.com/bullhe4d"
+      target="_blank"
+    ></a>
+    
+  </nav>
+  
+</header>
+
+
+    <main class="main">
+
+<article class="post-single">
+  <header class="post-title">
+    <p>
+      
+      <time>Apr 2, 2022</time>
+      
+      
+    </p>
+    <h1>channel实现</h1>
+  </header>
+  <section class="post-content"><h3 id="底层结构">底层结构</h3>
+<p>ch :=make(chan int ,5),因为channle 是引用类型，所以 make ，然后 ch（在栈）存的是一个指针地址，指针指向 堆上的hChan结构体，</p>
+<p>hchan结构体包含如下结构</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">hchan</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">qcount</span>   <span style="color:#66d9ef">uint</span>           <span style="color:#75715e">// total data in the queue					//缓冲区已经存了多少个元素
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">dataqsiz</span> <span style="color:#66d9ef">uint</span>           <span style="color:#75715e">// size of the circular queue			//环形队列的大小
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">buf</span>      <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span> <span style="color:#75715e">// points to an array of dataqsiz elements 缓冲区在内存的指针位置（一个数组）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">elemsize</span> <span style="color:#66d9ef">uint16</span>		<span style="color:#75715e">//					//每个元素占多大空间
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">closed</span>   <span style="color:#66d9ef">uint32</span>							<span style="color:#75715e">//	关闭状态
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">elemtype</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">_type</span> <span style="color:#75715e">// element type										//通道中的元素类型 指向类型指针
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">sendx</span>    <span style="color:#66d9ef">uint</span>   <span style="color:#75715e">// send index									//	目前数组里写的下表
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">recvx</span>    <span style="color:#66d9ef">uint</span>   <span style="color:#75715e">// receive index								//	目前数组里读的下表
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">recvq</span>    <span style="color:#a6e22e">waitq</span>  <span style="color:#75715e">// list of recv waiters						//读的等待队列		
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">sendq</span>    <span style="color:#a6e22e">waitq</span>  <span style="color:#75715e">// list of send waiters					//写的等待队列			sudog
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// lock protects all fields in hchan, as well as several
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// fields in sudogs blocked on this channel.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// Do not change another G&#39;s status while holding this lock
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// (in particular, do not ready a G), as this can deadlock
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// with stack shrinking.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">lock</span> <span style="color:#a6e22e">mutex</span> <span style="color:#75715e">//多个协程可以调用，所以要加一个互斥锁，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h3 id="heading"></h3>
+<p>初始情况下Channel sendx和 recvx的值 都是 0，</p>
+<p>使用协程 【G1】每次向channel发送一个数据，sendX 就+1，一直加到等于dataqsize（缓冲区的size），sendX 回到0 【环形队列】</p>
+<p>此时缓冲区已经没位置了 G1 进入等待，G1就会进入  sendq 队列中，</p>
+<p>使用【G2】从channel中读一个数据，recvX+1 , 缓冲区的0位置空出来了，此时唤醒recvq 中的G1，G1继续向channel写入数据，会存在0 的位置，sendX+1</p>
+<p>所以引申出来 一个channel在写入的时候，必须保证有缓冲区，并且缓冲区有空闲位置，或者有一个协程在等着recvq</p>
+<p>在读取的时候，必须保证缓冲区有数据，如果没有缓冲区，或者缓冲区是空的，就必须要有一个发送队列的协程在等待发送。</p>
+</section>
+
+  
+  
+  <footer class="post-tags">
+     
+    <a href="http://localhost:1313/tags/golang">Golang</a>
+     
+    <a href="http://localhost:1313/tags/%E9%9D%A2%E8%AF%95">面试</a>
+    
+  </footer>
+  
+
+  
+  
+  
+  <nav class="post-nav">
+    
+    <a class="prev" href="http://localhost:1313/post/redis/ms1/"><span>←</span><span>如果在生产环境中有千万级的key，如果想模糊查询应该用什么命令？</span></a>
+     
+    <a class="next" href="http://localhost:1313/post/golang/channel/"><span>channel实现</span><span>→</span></a>
+    
+  </nav>
+  
+
+  
+  
+</article>
+
+</main>
+
+    <footer class="footer">
+  <p>&copy; 2022 <a href="http://localhost:1313/">Bullhead</a></p>
+  <p>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</p>
+  <p>
+    <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper 5.1</a>
+  </p>
+</footer>
+
+  </body>
+</html>

@@ -78,5 +78,15 @@ G1如果在阻塞，M1就睡眠，G1执行完之后，去到别M下，M1自己�
 自旋队列 省去上下文的开销</description>
     </item>
     
+    <item>
+      <title>重复打印1和2</title>
+      <link>https://blog.diudiu.love/post/golang/repeatprint/</link>
+      <pubDate>Sat, 02 Apr 2022 09:56:44 +0800</pubDate>
+      
+      <guid>https://blog.diudiu.love/post/golang/repeatprint/</guid>
+      <description>使用channel按顺序重复打印1和2
+package main  import ( 	&amp;#34;fmt&amp;#34; )  func main() { 	ch1 := make(chan bool, 1) 	ch2 := make(chan bool) 	Exit := make(chan bool) 	go func() { 	for { 	if ok := &amp;lt;-ch1; ok { 	fmt.Println(1) 	ch2 &amp;lt;- true 	} 	} 	}()  	go func() { 	defer func() { 	close(Exit) 	}() 	for { 	if ok := &amp;lt;-ch2; ok { 	fmt.</description>
+    </item>
+    
   </channel>
 </rss>
