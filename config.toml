@@ -1,4 +1,4 @@
-baseURL = 'http://blog.diudiu.love/'
+baseURL = 'https://blog.diudiu.love/'
 languageCode = 'zh-cn'
 title = 'Bullhead‘s blog'
 theme = "paper"

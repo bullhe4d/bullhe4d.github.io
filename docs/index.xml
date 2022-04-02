@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bullhead‘s blog</title>
-    <link>http://blog.diudiu.love/</link>
+    <link>https://blog.diudiu.love/</link>
     <description>Recent content on Bullhead‘s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 02 Apr 2022 09:59:14 +0800</lastBuildDate><atom:link href="http://blog.diudiu.love/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 02 Apr 2022 09:59:14 +0800</lastBuildDate><atom:link href="https://blog.diudiu.love/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如果在生产环境中有千万级的key，如果想模糊查询应该用什么命令？</title>
-      <link>http://blog.diudiu.love/post/redis/ms1/</link>
+      <link>https://blog.diudiu.love/post/redis/ms1/</link>
       <pubDate>Sat, 02 Apr 2022 09:59:14 +0800</pubDate>
       
-      <guid>http://blog.diudiu.love/post/redis/ms1/</guid>
+      <guid>https://blog.diudiu.love/post/redis/ms1/</guid>
       <description>当时想当然的就回答用keys *结果踩了大坑，keys算法是遍历算法，复杂度是 O(n)，如果实例中有千万级以上的 key，这个指令就会导致 Redis 服务卡顿，所有读写Redis的其它的指令都会被延后甚至会超时报错.
 应该使用Scan
 scan特点：
@@ -25,10 +25,10 @@ scan特点：
     
     <item>
       <title>什么是GMP？</title>
-      <link>http://blog.diudiu.love/post/golang/gmp/</link>
+      <link>https://blog.diudiu.love/post/golang/gmp/</link>
       <pubDate>Sat, 02 Apr 2022 09:56:44 +0800</pubDate>
       
-      <guid>http://blog.diudiu.love/post/golang/gmp/</guid>
+      <guid>https://blog.diudiu.love/post/golang/gmp/</guid>
       <description>GMP 基本含义 G对应一个goroutine
 M 对应CPU的物理线程，由内核态管理
 P一般和M一一对应，P里面存储当前go routine的上下文环境
