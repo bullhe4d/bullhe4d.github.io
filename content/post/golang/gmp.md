@@ -8,7 +8,7 @@ typora-root-url: ../../../static
 
 # GMP 
 
-![image-20220402155313455](/../image/image-20220402155313455.png)
+![image-20220402155754224](/images/image-20220402155754224.png)
 
 ## 基本含义
 
