@@ -1,4 +1,4 @@
-.PHONY: publish
+ makefile.PHONY: publish
 
 publish:
 	hugo -d docs &&\
