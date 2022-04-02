@@ -3,12 +3,12 @@ title: "什么是GMP？"
 tags : [ "Golang", "面试" ]
 categories : [ "Golang" ]
 date: 2022-04-02T09:56:44+08:00
-typora-root-url: ../../assets
+typora-root-url: ../../../static
 ---
 
 # GMP 
 
-![image-20220402153234039](/image-20220402153234039.png)
+![image-20220402155313455](/../image/image-20220402155313455.png)
 
 ## 基本含义
 
