@@ -24,6 +24,17 @@ scan特点：
     </item>
     
     <item>
+      <title>channel实现</title>
+      <link>https://blog.diudiu.love/post/golang/channel/</link>
+      <pubDate>Sat, 02 Apr 2022 09:56:44 +0800</pubDate>
+      
+      <guid>https://blog.diudiu.love/post/golang/channel/</guid>
+      <description>底层结构 ch :=make(chan int ,5),因为channle 是引用类型，所以 make ，然后 ch（在栈）存的是一个指针地址，指针指向 堆上的hChan结构体，
+hchan结构体包含如下结构
+type hchan struct {  qcount uint // total data in the queue	//缓冲区已经存了多少个元素  dataqsiz uint // size of the circular queue	//环形队列的大小  buf unsafe.Pointer // points to an array of dataqsiz elements 缓冲区在内存的指针位置（一个数组）  elemsize uint16	//	//每个元素占多大空间  closed uint32	//	关闭状态  elemtype *_type // element type	//通道中的元素类型 指向类型指针  sendx uint // send index	//	目前数组里写的下表  recvx uint // receive index	//	目前数组里读的下表  recvq waitq // list of recv waiters	//读的等待队列	 sendq waitq // list of send waiters	//写的等待队列	sudog   // lock protects all fields in hchan, as well as several  // fields in sudogs blocked on this channel.</description>
+    </item>
+    
+    <item>
       <title>Golang的GC垃圾回收机制？</title>
       <link>https://blog.diudiu.love/post/golang/gc/</link>
       <pubDate>Sat, 02 Apr 2022 09:56:44 +0800</pubDate>
