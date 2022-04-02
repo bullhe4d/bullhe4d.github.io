@@ -2,26 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2022-04-02T09:59:14+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/post/</loc>
-    <lastmod>2022-04-02T09:59:14+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/post/redis/ms1/</loc>
-    <lastmod>2022-04-02T09:59:14+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/post/golang/gmp/</loc>
-    <lastmod>2022-04-02T09:56:44+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/about/</loc>
-    <lastmod>2022-04-02T09:52:15+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/gmp/</loc>
+    <loc>http://blog.diudiu.love/gmp/</loc>
     <priority>0</priority>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>http://blog.diudiu.love/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>http://blog.diudiu.love/categories/</loc>
+  </url><url>
+    <loc>http://blog.diudiu.love/tags/</loc>
   </url>
 </urlset>
