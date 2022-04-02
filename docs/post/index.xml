@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Bullhead‘s blog</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on Bullhead‘s blog</description>
+    <title>Posts on Bullhead‘s blog</title>
+    <link>http://localhost:1313/post/</link>
+    <description>Recent content in Posts on Bullhead‘s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 02 Apr 2022 09:59:14 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 02 Apr 2022 09:59:14 +0800</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如果在生产环境中有千万级的key，如果想模糊查询应该用什么命令？</title>
       <link>http://localhost:1313/post/redis/ms1/</link>
@@ -48,24 +48,6 @@ G1如果在阻塞，M1就睡眠，G1执行完之后，去到别M下，M1自己�
 5.如果阻塞了执行 handoff机制
 如果本地G队列满了，新加一个G，二分法队列，将前面的G和新加的G打散放入全局
 自旋队列 省去上下文的开销</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>http://localhost:1313/about/</link>
-      <pubDate>Sat, 02 Apr 2022 09:52:15 +0800</pubDate>
-      
-      <guid>http://localhost:1313/about/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://localhost:1313/gmp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/gmp/</guid>
-      <description></description>
     </item>
     
   </channel>
