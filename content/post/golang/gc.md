@@ -1,13 +1,11 @@
 ---
-title: "什么是GMP？"
+title: "Golang的GC垃圾回收机制？"
 tags : [ "Golang", "面试" ]
 categories : [ "Golang" ]
 date: 2022-04-02T09:56:44+08:00
 ---
 
-# Golang的GC垃圾回收机制
-
-堆和栈
+## 堆和栈
 
 栈是静态的，程序一启动就确定了，堆是动态的。运行的时候会变化
 

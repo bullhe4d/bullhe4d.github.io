@@ -8,13 +8,12 @@
     <language>zh-cn</language>
     <lastBuildDate>Sat, 02 Apr 2022 09:56:44 +0800</lastBuildDate><atom:link href="https://blog.diudiu.love/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>什么是GMP？</title>
+      <title>Golang的GC垃圾回收机制？</title>
       <link>https://blog.diudiu.love/post/golang/gc/</link>
       <pubDate>Sat, 02 Apr 2022 09:56:44 +0800</pubDate>
       
       <guid>https://blog.diudiu.love/post/golang/gc/</guid>
-      <description>Golang的GC垃圾回收机制 堆和栈
-栈是静态的，程序一启动就确定了，堆是动态的。运行的时候会变化
+      <description>堆和栈 栈是静态的，程序一启动就确定了，堆是动态的。运行的时候会变化
 栈stack(快，省心，但不灵活) 在编译时就知道其内容/大小的数据，这部分数据直接被编译在了的可执行文件 中。 由CP U管理。每声明一个新变量，它就会被推入栈，当作用域函数/程序退出时 被释放。 栈会先进后出的顺序来存储（堆放盘子），向栈上推入的数据位置永远处于栈的 顶端，无需找新的数据存储位置，可以高效、快速的读写。 缺点1：无法存放编译时不知道大小的数据。
 3。2堆heap(灵活，但没栈省心，没栈快) 由程序管理（(GC/程序员/计数器…)。 编译无法确定大小的数据，将存储在堆中，比如用户输入的文字。 程序根据需要请求特定大小的空间，操作系统找一块足够大且可用空间，把这 片空间的地址返回给程序。 缺点1：需要花时间来记录协调分配。 缺点2：需要跳转，跳转次数越多越慢。 缺点3：数据排布稀疏。
 标记清除法 程序去扫描所有的对象，查找到所有可达的对象，然后做标记。 然后stw（stop the word，暂停程序），然后sweep掉所有的对象，
@@ -37,7 +36,8 @@
 混合写屏障 1、GC开始将栈上的对象全部扫描并标记为黑色(之后不再进行第二次重复扫描，无需STW)，
 2、GC期间，任何在栈上创建的新对象，均为黑色。
 3、被删除的对象标记为灰色。
-4、被添加的对象标记为灰色。</description>
+4、被添加的对象标记为灰色。
+满足: 变形的弱三色不变式.</description>
     </item>
     
     <item>
