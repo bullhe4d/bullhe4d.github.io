@@ -7,7 +7,7 @@ date: 2022-04-02T09:56:44+08:00
 
 # GMP 
 
-![image-20220402144202934](https://tva1.sinaimg.cn/large/e6c9d24ely1h0vdfqjyrrj21420u0whd.jpg)
+![image-20220402145320670](gmp/image-20220402145320670.png)
 
 ## 基本含义
 
