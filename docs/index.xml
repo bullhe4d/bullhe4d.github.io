@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Bullhead‘s blog</title>
+    <title>Bullhead</title>
     <link>https://blog.diudiu.love/</link>
-    <description>Recent content on Bullhead‘s blog</description>
+    <description>Recent content on Bullhead</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sat, 02 Apr 2022 09:59:14 +0800</lastBuildDate><atom:link href="https://blog.diudiu.love/index.xml" rel="self" type="application/rss+xml" />
@@ -51,7 +51,7 @@ G1如果在阻塞，M1就睡眠，G1执行完之后，去到别M下，M1自己�
     </item>
     
     <item>
-      <title>About</title>
+      <title>关于</title>
       <link>https://blog.diudiu.love/about/</link>
       <pubDate>Sat, 02 Apr 2022 09:52:15 +0800</pubDate>
       

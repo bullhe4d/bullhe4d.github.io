@@ -1,8 +1,7 @@
 baseURL = 'https://blog.diudiu.love/'
 languageCode = 'zh-cn'
-title = 'Bullhead‘s blog'
+title = 'Bullhead'
 theme = "paper"
-menu = ['main', 'footer']
 [taxonomies]
   tag = "tags"
   series = "series"
