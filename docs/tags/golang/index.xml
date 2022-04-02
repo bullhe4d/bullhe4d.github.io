@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on Bullhead‘s blog</title>
+    <link>https://blog.diudiu.love/tags/golang/</link>
+    <description>Recent content in Golang on Bullhead‘s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 02 Apr 2022 09:56:44 +0800</lastBuildDate><atom:link href="https://blog.diudiu.love/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>什么是GMP？</title>
+      <link>https://blog.diudiu.love/post/golang/gmp/</link>
+      <pubDate>Sat, 02 Apr 2022 09:56:44 +0800</pubDate>
+      
+      <guid>https://blog.diudiu.love/post/golang/gmp/</guid>
+      <description>GMP 基本含义 G对应一个goroutine
+M 对应CPU的物理线程，由内核态管理
+P一般和M一一对应，P里面存储当前go routine的上下文环境
+P的个数是通过runtime.GOMAXPROCS设定(最大256),Go1.5版本之后默认为物理线程数。在并发量大的时候会增加一些P和M，但不会太多，切换太频繁的话得不偿失。
+一个线程执行一个P
+M共经历三个过程：先从本地队列找，定期会从全局队列找，最后实在没办法，就去别的 P 偷。如下图所示：
+设计策略 复用线程 workstealing机制 如果M2线程本地协程队列空了，去M1偷一个过来，然后去全局队列拿，如果都没了，就睡眠或者销毁
+hand off机制 如果M1线程的某个Goroutine G1阻塞了（比如read文件），内核态启动一个新的M2，把M1剩下的G，G2,G3放到这个新的M线程里，
+G1如果在阻塞，M1就睡眠，G1执行完之后，去到别M下，M1自己销毁。
+利用并行 设置GOMAXPROCS
+抢占策略 一个G和一个CPU最多的链接时间10MS，别的G会去占用
+全局队列 先从别的P偷，别的P没了再去全局队列偷，偷之前先上锁，偷完解锁。
+调度流程 1.go func创建 一个g
+2.加入本地队列M1，如果满了，放到全局里
+3.M会从P的队列里拿一个G来之行，如果一个P里面空了，就去别的M P偷一个，如果别的没有，去拿全局。
+4.M调度G是一个循环过程，直到把G执行完
+5.如果阻塞了执行 handoff机制
+如果本地G队列满了，新加一个G，二分法队列，将前面的G和新加的G打散放入全局
+自旋队列 省去上下文的开销</description>
+    </item>
+    
+  </channel>
+</rss>
