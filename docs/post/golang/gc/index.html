@@ -21,11 +21,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
   
-  <title> - Bullhead</title>
+  <title>什么是GMP？ - Bullhead</title>
 
   
   
-  <meta name="description" content="垃圾回收 堆和栈
+  <meta name="description" content="Golang的GC垃圾回收机制 堆和栈
 栈是静态的，程序一启动就确定了，堆是动态的。运行的时候会变化
 栈stack(快，省心，但不灵活) 在编译时就知道其内容/大小的数据，这部分数据直接被编译在了的可执行文件 中。 由CP U管理。每声明一个新变量，它就会被推入栈，当作用域函数/程序退出时 被释放。 栈会先进后出的顺序来存储（堆放盘子），向栈上推入的数据位置永远处于栈的 顶端，无需找新的数据存储位置，可以高效、快速的读写。 缺点1：无法存放编译时不知道大小的数据。
 3。2堆heap(灵活，但没栈省心，没栈快) 由程序管理（(GC/程序员/计数器…)。 编译无法确定大小的数据，将存储在堆中，比如用户输入的文字。 程序根据需要请求特定大小的空间，操作系统找一块足够大且可用空间，把这 片空间的地址返回给程序。 缺点1：需要花时间来记录协调分配。 缺点2：需要跳转，跳转次数越多越慢。 缺点3：数据排布稀疏。
@@ -98,8 +98,8 @@
   
   
   
-  <meta property="og:title" content="" />
-<meta property="og:description" content="垃圾回收 堆和栈
+  <meta property="og:title" content="什么是GMP？" />
+<meta property="og:description" content="Golang的GC垃圾回收机制 堆和栈
 栈是静态的，程序一启动就确定了，堆是动态的。运行的时候会变化
 栈stack(快，省心，但不灵活) 在编译时就知道其内容/大小的数据，这部分数据直接被编译在了的可执行文件 中。 由CP U管理。每声明一个新变量，它就会被推入栈，当作用域函数/程序退出时 被释放。 栈会先进后出的顺序来存储（堆放盘子），向栈上推入的数据位置永远处于栈的 顶端，无需找新的数据存储位置，可以高效、快速的读写。 缺点1：无法存放编译时不知道大小的数据。
 3。2堆heap(灵活，但没栈省心，没栈快) 由程序管理（(GC/程序员/计数器…)。 编译无法确定大小的数据，将存储在堆中，比如用户输入的文字。 程序根据需要请求特定大小的空间，操作系统找一块足够大且可用空间，把这 片空间的地址返回给程序。 缺点1：需要花时间来记录协调分配。 缺点2：需要跳转，跳转次数越多越慢。 缺点3：数据排布稀疏。
@@ -126,13 +126,13 @@
 4、被添加的对象标记为灰色。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.diudiu.love/post/golang/gc/" /><meta property="article:section" content="post" />
-
-
+<meta property="article:published_time" content="2022-04-02T09:56:44+08:00" />
+<meta property="article:modified_time" content="2022-04-02T09:56:44+08:00" />
 
 
   
-  <meta itemprop="name" content="">
-<meta itemprop="description" content="垃圾回收 堆和栈
+  <meta itemprop="name" content="什么是GMP？">
+<meta itemprop="description" content="Golang的GC垃圾回收机制 堆和栈
 栈是静态的，程序一启动就确定了，堆是动态的。运行的时候会变化
 栈stack(快，省心，但不灵活) 在编译时就知道其内容/大小的数据，这部分数据直接被编译在了的可执行文件 中。 由CP U管理。每声明一个新变量，它就会被推入栈，当作用域函数/程序退出时 被释放。 栈会先进后出的顺序来存储（堆放盘子），向栈上推入的数据位置永远处于栈的 顶端，无需找新的数据存储位置，可以高效、快速的读写。 缺点1：无法存放编译时不知道大小的数据。
 3。2堆heap(灵活，但没栈省心，没栈快) 由程序管理（(GC/程序员/计数器…)。 编译无法确定大小的数据，将存储在堆中，比如用户输入的文字。 程序根据需要请求特定大小的空间，操作系统找一块足够大且可用空间，把这 片空间的地址返回给程序。 缺点1：需要花时间来记录协调分配。 缺点2：需要跳转，跳转次数越多越慢。 缺点3：数据排布稀疏。
@@ -156,14 +156,14 @@
 混合写屏障 1、GC开始将栈上的对象全部扫描并标记为黑色(之后不再进行第二次重复扫描，无需STW)，
 2、GC期间，任何在栈上创建的新对象，均为黑色。
 3、被删除的对象标记为灰色。
-4、被添加的对象标记为灰色。">
-
+4、被添加的对象标记为灰色。"><meta itemprop="datePublished" content="2022-04-02T09:56:44+08:00" />
+<meta itemprop="dateModified" content="2022-04-02T09:56:44+08:00" />
 <meta itemprop="wordCount" content="72">
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="Golang,面试," />
   
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="垃圾回收 堆和栈
+<meta name="twitter:title" content="什么是GMP？"/>
+<meta name="twitter:description" content="Golang的GC垃圾回收机制 堆和栈
 栈是静态的，程序一启动就确定了，堆是动态的。运行的时候会变化
 栈stack(快，省心，但不灵活) 在编译时就知道其内容/大小的数据，这部分数据直接被编译在了的可执行文件 中。 由CP U管理。每声明一个新变量，它就会被推入栈，当作用域函数/程序退出时 被释放。 栈会先进后出的顺序来存储（堆放盘子），向栈上推入的数据位置永远处于栈的 顶端，无需找新的数据存储位置，可以高效、快速的读写。 缺点1：无法存放编译时不知道大小的数据。
 3。2堆heap(灵活，但没栈省心，没栈快) 由程序管理（(GC/程序员/计数器…)。 编译无法确定大小的数据，将存储在堆中，比如用户输入的文字。 程序根据需要请求特定大小的空间，操作系统找一块足够大且可用空间，把这 片空间的地址返回给程序。 缺点1：需要花时间来记录协调分配。 缺点2：需要跳转，跳转次数越多越慢。 缺点3：数据排布稀疏。
@@ -257,11 +257,13 @@
   <header class="post-title">
     <p>
       
+      <time>Apr 2, 2022</time>
+      
       
     </p>
-    <h1></h1>
+    <h1>什么是GMP？</h1>
   </header>
-  <section class="post-content"><h1 id="垃圾回收">垃圾回收</h1>
+  <section class="post-content"><h1 id="golang的gc垃圾回收机制">Golang的GC垃圾回收机制</h1>
 <p>堆和栈</p>
 <p>栈是静态的，程序一启动就确定了，堆是动态的。运行的时候会变化</p>
 <p>栈stack(快，省心，但不灵活)
@@ -317,14 +319,24 @@
 
   
   
+  <footer class="post-tags">
+     
+    <a href="https://blog.diudiu.love/tags/golang">Golang</a>
+     
+    <a href="https://blog.diudiu.love/tags/%E9%9D%A2%E8%AF%95">面试</a>
+    
+  </footer>
+  
 
   
   
   
   <nav class="post-nav">
     
-    <a class="prev" href="https://blog.diudiu.love/post/golang/gmp/"><span>←</span><span>什么是GMP？</span></a>
+    <a class="prev" href="https://blog.diudiu.love/post/redis/ms1/"><span>←</span><span>如果在生产环境中有千万级的key，如果想模糊查询应该用什么命令？</span></a>
      
+    <a class="next" href="https://blog.diudiu.love/post/golang/gmp/"><span>什么是GMP？</span><span>→</span></a>
+    
   </nav>
   
 

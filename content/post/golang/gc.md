@@ -1,4 +1,11 @@
-# 垃圾回收
+---
+title: "什么是GMP？"
+tags : [ "Golang", "面试" ]
+categories : [ "Golang" ]
+date: 2022-04-02T09:56:44+08:00
+---
+
+# Golang的GC垃圾回收机制
 
 堆和栈
 
