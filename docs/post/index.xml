@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Bullhead‘s blog</title>
-    <link>http://blog.diudiu.love/</link>
-    <description>Recent content on Bullhead‘s blog</description>
+    <title>Posts on Bullhead‘s blog</title>
+    <link>http://blog.diudiu.love/post/</link>
+    <description>Recent content in Posts on Bullhead‘s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 02 Apr 2022 09:59:14 +0800</lastBuildDate><atom:link href="http://blog.diudiu.love/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 02 Apr 2022 09:59:14 +0800</lastBuildDate><atom:link href="http://blog.diudiu.love/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如果在生产环境中有千万级的key，如果想模糊查询应该用什么命令？</title>
       <link>http://blog.diudiu.love/post/redis/ms1/</link>

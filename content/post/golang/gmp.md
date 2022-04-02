@@ -1,7 +1,6 @@
 ---
 title: "什么是GMP？"
 date: 2022-04-02T09:56:44+08:00
-draft: true
 ---
 
 # GMP 
