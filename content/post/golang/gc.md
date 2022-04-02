@@ -2,7 +2,7 @@
 title: "Golang的GC垃圾回收机制？"
 tags : [ "Golang", "面试" ]
 categories : [ "Golang" ]
-date: 2022-04-02T09:56:44+08:00
+date: 2022-04-01T09:56:44+08:00
 ---
 
 ## 堆和栈

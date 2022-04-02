@@ -35,9 +35,19 @@ type hchan struct {  qcount uint // total data in the queue	//缓冲区已经存
     </item>
     
     <item>
+      <title>关于</title>
+      <link>https://blog.diudiu.love/about/</link>
+      <pubDate>Sat, 02 Apr 2022 09:52:15 +0800</pubDate>
+      
+      <guid>https://blog.diudiu.love/about/</guid>
+      <description> The best time to plant a tree is 20 years ago. The second-best time is now.
+ </description>
+    </item>
+    
+    <item>
       <title>Golang的GC垃圾回收机制？</title>
       <link>https://blog.diudiu.love/post/golang/gc/</link>
-      <pubDate>Sat, 02 Apr 2022 09:56:44 +0800</pubDate>
+      <pubDate>Fri, 01 Apr 2022 09:56:44 +0800</pubDate>
       
       <guid>https://blog.diudiu.love/post/golang/gc/</guid>
       <description>堆和栈 栈是静态的，程序一启动就确定了，堆是动态的。运行的时候会变化
@@ -70,7 +80,7 @@ type hchan struct {  qcount uint // total data in the queue	//缓冲区已经存
     <item>
       <title>什么是GMP？</title>
       <link>https://blog.diudiu.love/post/golang/gmp/</link>
-      <pubDate>Sat, 02 Apr 2022 09:56:44 +0800</pubDate>
+      <pubDate>Fri, 01 Apr 2022 09:56:44 +0800</pubDate>
       
       <guid>https://blog.diudiu.love/post/golang/gmp/</guid>
       <description>GMP 基本含义 G对应一个goroutine
@@ -97,21 +107,11 @@ G1如果在阻塞，M1就睡眠，G1执行完之后，去到别M下，M1自己�
     <item>
       <title>重复打印1和2</title>
       <link>https://blog.diudiu.love/post/golang/repeatprint/</link>
-      <pubDate>Sat, 02 Apr 2022 09:56:44 +0800</pubDate>
+      <pubDate>Fri, 01 Apr 2022 09:56:44 +0800</pubDate>
       
       <guid>https://blog.diudiu.love/post/golang/repeatprint/</guid>
       <description>使用channel按顺序重复打印1和2
 package main  import ( 	&amp;#34;fmt&amp;#34; )  func main() { 	ch1 := make(chan bool, 1) 	ch2 := make(chan bool) 	Exit := make(chan bool) 	go func() { 	for { 	if ok := &amp;lt;-ch1; ok { 	fmt.Println(1) 	ch2 &amp;lt;- true 	} 	} 	}()  	go func() { 	defer func() { 	close(Exit) 	}() 	for { 	if ok := &amp;lt;-ch2; ok { 	fmt.</description>
-    </item>
-    
-    <item>
-      <title>关于</title>
-      <link>https://blog.diudiu.love/about/</link>
-      <pubDate>Sat, 02 Apr 2022 09:52:15 +0800</pubDate>
-      
-      <guid>https://blog.diudiu.love/about/</guid>
-      <description> The best time to plant a tree is 20 years ago. The second-best time is now.
- </description>
     </item>
     
   </channel>

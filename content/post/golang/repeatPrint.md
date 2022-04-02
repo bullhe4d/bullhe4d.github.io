@@ -2,7 +2,7 @@
 title: "重复打印1和2"
 tags : [ "Golang", "面试" ]
 categories : [ "Golang" ]
-date: 2022-04-02T09:56:44+08:00
+date: 2022-04-01T09:56:44+08:00
 ---
 
 使用channel按顺序重复打印1和2

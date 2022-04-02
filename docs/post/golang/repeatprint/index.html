@@ -76,15 +76,15 @@ package main  import ( 	&#34;fmt&#34; )  func main() { 	ch1 := make(chan bool, 1
 package main  import ( 	&#34;fmt&#34; )  func main() { 	ch1 := make(chan bool, 1) 	ch2 := make(chan bool) 	Exit := make(chan bool) 	go func() { 	for { 	if ok := &lt;-ch1; ok { 	fmt.Println(1) 	ch2 &lt;- true 	} 	} 	}()  	go func() { 	defer func() { 	close(Exit) 	}() 	for { 	if ok := &lt;-ch2; ok { 	fmt." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.diudiu.love/post/golang/repeatprint/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2022-04-02T09:56:44+08:00" />
-<meta property="article:modified_time" content="2022-04-02T09:56:44+08:00" />
+<meta property="article:published_time" content="2022-04-01T09:56:44+08:00" />
+<meta property="article:modified_time" content="2022-04-01T09:56:44+08:00" />
 
 
   
   <meta itemprop="name" content="重复打印1和2">
 <meta itemprop="description" content="使用channel按顺序重复打印1和2
-package main  import ( 	&#34;fmt&#34; )  func main() { 	ch1 := make(chan bool, 1) 	ch2 := make(chan bool) 	Exit := make(chan bool) 	go func() { 	for { 	if ok := &lt;-ch1; ok { 	fmt.Println(1) 	ch2 &lt;- true 	} 	} 	}()  	go func() { 	defer func() { 	close(Exit) 	}() 	for { 	if ok := &lt;-ch2; ok { 	fmt."><meta itemprop="datePublished" content="2022-04-02T09:56:44+08:00" />
-<meta itemprop="dateModified" content="2022-04-02T09:56:44+08:00" />
+package main  import ( 	&#34;fmt&#34; )  func main() { 	ch1 := make(chan bool, 1) 	ch2 := make(chan bool) 	Exit := make(chan bool) 	go func() { 	for { 	if ok := &lt;-ch1; ok { 	fmt.Println(1) 	ch2 &lt;- true 	} 	} 	}()  	go func() { 	defer func() { 	close(Exit) 	}() 	for { 	if ok := &lt;-ch2; ok { 	fmt."><meta itemprop="datePublished" content="2022-04-01T09:56:44+08:00" />
+<meta itemprop="dateModified" content="2022-04-01T09:56:44+08:00" />
 <meta itemprop="wordCount" content="70">
 <meta itemprop="keywords" content="Golang,面试," />
   
@@ -154,7 +154,7 @@ package main  import ( 	&#34;fmt&#34; )  func main() { 	ch1 := make(chan bool, 1
   <header class="post-title">
     <p>
       
-      <time>Apr 2, 2022</time>
+      <time>Apr 1, 2022</time>
       
       
     </p>
