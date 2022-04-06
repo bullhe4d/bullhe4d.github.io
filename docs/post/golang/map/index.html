@@ -24,7 +24,7 @@
   
   
   <meta name="description" content="面试题  map的底层实现原理 为什么遍历map是无序的？ 如何实现有序遍历map？ 为什么Go map是非线程安全的？ 线程安全的map如何实现? Go sync.map 和原生 map 谁的性能好，为什么？ 为什么 Go map 的负载因子是 6.5？ map扩容策略是什么?  实现原理 Go中的map是一个指针，占用8个字节，指向hmap结构体; 源码src/runtime/map.go中可以看到map的底层结构
-每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构hmap结构体 // A header for a Go map. type hmap struct { count int // 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。 flags uint8 // 状态标志，下文常量中会解释四种状态位含义。 B uint8 // buckets（桶）的对数log_2 // 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶 noverflow uint16 // 溢出桶的大概数量 hash0 uint32 // 哈希种子 buckets unsafe.Pointer // 指向buckets数组的指针，数组大小为2^B，如果元素个数为0，它为nil。 oldbuckets unsafe.Pointer // 如果发生扩容，oldbuckets是指向老的buckets数组的指针，老的buckets数组大小是新的buckets的1/2;非扩容状态下，它为nil。 nevacuate uintptr // 表示扩容进度，小于此地址的buckets代表已搬迁完成。 extra *mapextra // 这个字段是为了优化GC扫描而设计的。当key和value均不包含指针，并且都可以inline时使用。extra是指向mapextra类型的指针。 } bmap结构体 bmap 就是我们常说的“桶”，一个桶里面会最多装 8 个 key，这些 key 之所以会落入同一个桶，是因为它们经过哈希计算后，哈希结果是“一类”的，关于key的定位我们在map的查询和插入中详细说明。在桶内，又会根据 key 计算出来的 hash 值的高 8 位来决定 key 到底落入桶内的哪个位置（一个桶内最多有8个位置)。" />
+每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构hmap结构体 // A header for a Go map. type hmap struct {  count int  // 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。  flags uint8  // 状态标志，下文常量中会解释四种状态位含义。  B uint8  // buckets（桶）的对数log_2  // 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶  noverflow uint16  // 溢出桶的大概数量  hash0 uint32  // 哈希种子   buckets unsafe." />
   <meta name="author" content="" />
   
 
@@ -73,7 +73,7 @@
   
   <meta property="og:title" content="彻底理解Golang Map" />
 <meta property="og:description" content="面试题  map的底层实现原理 为什么遍历map是无序的？ 如何实现有序遍历map？ 为什么Go map是非线程安全的？ 线程安全的map如何实现? Go sync.map 和原生 map 谁的性能好，为什么？ 为什么 Go map 的负载因子是 6.5？ map扩容策略是什么?  实现原理 Go中的map是一个指针，占用8个字节，指向hmap结构体; 源码src/runtime/map.go中可以看到map的底层结构
-每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构hmap结构体 // A header for a Go map. type hmap struct { count int // 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。 flags uint8 // 状态标志，下文常量中会解释四种状态位含义。 B uint8 // buckets（桶）的对数log_2 // 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶 noverflow uint16 // 溢出桶的大概数量 hash0 uint32 // 哈希种子 buckets unsafe.Pointer // 指向buckets数组的指针，数组大小为2^B，如果元素个数为0，它为nil。 oldbuckets unsafe.Pointer // 如果发生扩容，oldbuckets是指向老的buckets数组的指针，老的buckets数组大小是新的buckets的1/2;非扩容状态下，它为nil。 nevacuate uintptr // 表示扩容进度，小于此地址的buckets代表已搬迁完成。 extra *mapextra // 这个字段是为了优化GC扫描而设计的。当key和value均不包含指针，并且都可以inline时使用。extra是指向mapextra类型的指针。 } bmap结构体 bmap 就是我们常说的“桶”，一个桶里面会最多装 8 个 key，这些 key 之所以会落入同一个桶，是因为它们经过哈希计算后，哈希结果是“一类”的，关于key的定位我们在map的查询和插入中详细说明。在桶内，又会根据 key 计算出来的 hash 值的高 8 位来决定 key 到底落入桶内的哪个位置（一个桶内最多有8个位置)。" />
+每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构hmap结构体 // A header for a Go map. type hmap struct {  count int  // 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。  flags uint8  // 状态标志，下文常量中会解释四种状态位含义。  B uint8  // buckets（桶）的对数log_2  // 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶  noverflow uint16  // 溢出桶的大概数量  hash0 uint32  // 哈希种子   buckets unsafe." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.diudiu.love/post/golang/map/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-04-06T10:31:58+08:00" />
@@ -83,7 +83,7 @@
   
   <meta itemprop="name" content="彻底理解Golang Map">
 <meta itemprop="description" content="面试题  map的底层实现原理 为什么遍历map是无序的？ 如何实现有序遍历map？ 为什么Go map是非线程安全的？ 线程安全的map如何实现? Go sync.map 和原生 map 谁的性能好，为什么？ 为什么 Go map 的负载因子是 6.5？ map扩容策略是什么?  实现原理 Go中的map是一个指针，占用8个字节，指向hmap结构体; 源码src/runtime/map.go中可以看到map的底层结构
-每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构hmap结构体 // A header for a Go map. type hmap struct { count int // 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。 flags uint8 // 状态标志，下文常量中会解释四种状态位含义。 B uint8 // buckets（桶）的对数log_2 // 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶 noverflow uint16 // 溢出桶的大概数量 hash0 uint32 // 哈希种子 buckets unsafe.Pointer // 指向buckets数组的指针，数组大小为2^B，如果元素个数为0，它为nil。 oldbuckets unsafe.Pointer // 如果发生扩容，oldbuckets是指向老的buckets数组的指针，老的buckets数组大小是新的buckets的1/2;非扩容状态下，它为nil。 nevacuate uintptr // 表示扩容进度，小于此地址的buckets代表已搬迁完成。 extra *mapextra // 这个字段是为了优化GC扫描而设计的。当key和value均不包含指针，并且都可以inline时使用。extra是指向mapextra类型的指针。 } bmap结构体 bmap 就是我们常说的“桶”，一个桶里面会最多装 8 个 key，这些 key 之所以会落入同一个桶，是因为它们经过哈希计算后，哈希结果是“一类”的，关于key的定位我们在map的查询和插入中详细说明。在桶内，又会根据 key 计算出来的 hash 值的高 8 位来决定 key 到底落入桶内的哪个位置（一个桶内最多有8个位置)。"><meta itemprop="datePublished" content="2022-04-06T10:31:58+08:00" />
+每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构hmap结构体 // A header for a Go map. type hmap struct {  count int  // 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。  flags uint8  // 状态标志，下文常量中会解释四种状态位含义。  B uint8  // buckets（桶）的对数log_2  // 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶  noverflow uint16  // 溢出桶的大概数量  hash0 uint32  // 哈希种子   buckets unsafe."><meta itemprop="datePublished" content="2022-04-06T10:31:58+08:00" />
 <meta itemprop="dateModified" content="2022-04-06T10:31:58+08:00" />
 <meta itemprop="wordCount" content="1812">
 <meta itemprop="keywords" content="" />
@@ -91,7 +91,7 @@
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="彻底理解Golang Map"/>
 <meta name="twitter:description" content="面试题  map的底层实现原理 为什么遍历map是无序的？ 如何实现有序遍历map？ 为什么Go map是非线程安全的？ 线程安全的map如何实现? Go sync.map 和原生 map 谁的性能好，为什么？ 为什么 Go map 的负载因子是 6.5？ map扩容策略是什么?  实现原理 Go中的map是一个指针，占用8个字节，指向hmap结构体; 源码src/runtime/map.go中可以看到map的底层结构
-每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构hmap结构体 // A header for a Go map. type hmap struct { count int // 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。 flags uint8 // 状态标志，下文常量中会解释四种状态位含义。 B uint8 // buckets（桶）的对数log_2 // 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶 noverflow uint16 // 溢出桶的大概数量 hash0 uint32 // 哈希种子 buckets unsafe.Pointer // 指向buckets数组的指针，数组大小为2^B，如果元素个数为0，它为nil。 oldbuckets unsafe.Pointer // 如果发生扩容，oldbuckets是指向老的buckets数组的指针，老的buckets数组大小是新的buckets的1/2;非扩容状态下，它为nil。 nevacuate uintptr // 表示扩容进度，小于此地址的buckets代表已搬迁完成。 extra *mapextra // 这个字段是为了优化GC扫描而设计的。当key和value均不包含指针，并且都可以inline时使用。extra是指向mapextra类型的指针。 } bmap结构体 bmap 就是我们常说的“桶”，一个桶里面会最多装 8 个 key，这些 key 之所以会落入同一个桶，是因为它们经过哈希计算后，哈希结果是“一类”的，关于key的定位我们在map的查询和插入中详细说明。在桶内，又会根据 key 计算出来的 hash 值的高 8 位来决定 key 到底落入桶内的哪个位置（一个桶内最多有8个位置)。"/>
+每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构hmap结构体 // A header for a Go map. type hmap struct {  count int  // 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。  flags uint8  // 状态标志，下文常量中会解释四种状态位含义。  B uint8  // buckets（桶）的对数log_2  // 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶  noverflow uint16  // 溢出桶的大概数量  hash0 uint32  // 哈希种子   buckets unsafe."/>
 
   
   
@@ -176,31 +176,31 @@
 <p>Go中的map是一个指针，占用8个字节，指向hmap结构体;  源码<code>src/runtime/map.go</code>中可以看到map的底层结构</p>
 <p>每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构<img src="/images/640-20220406103230437.png" alt="图片"></p>
 <h2 id="hmap结构体">hmap结构体</h2>
-<pre tabindex="0"><code>// A header for a Go map.
-type hmap struct {
-    count     int 
-    // 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。
-    flags     uint8 
-    // 状态标志，下文常量中会解释四种状态位含义。
-    B         uint8  
-    // buckets（桶）的对数log_2
-    // 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶
-    noverflow uint16 
-    // 溢出桶的大概数量
-    hash0     uint32 
-    // 哈希种子
-
-    buckets    unsafe.Pointer 
-    // 指向buckets数组的指针，数组大小为2^B，如果元素个数为0，它为nil。
-    oldbuckets unsafe.Pointer 
-    // 如果发生扩容，oldbuckets是指向老的buckets数组的指针，老的buckets数组大小是新的buckets的1/2;非扩容状态下，它为nil。
-    nevacuate  uintptr        
-    // 表示扩容进度，小于此地址的buckets代表已搬迁完成。
-
-    extra *mapextra 
-    // 这个字段是为了优化GC扫描而设计的。当key和value均不包含指针，并且都可以inline时使用。extra是指向mapextra类型的指针。
- }
-</code></pre><h2 id="bmap结构体">bmap结构体</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// A header for a Go map.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">hmap</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">count</span>     <span style="color:#66d9ef">int</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">flags</span>     <span style="color:#66d9ef">uint8</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 状态标志，下文常量中会解释四种状态位含义。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">B</span>         <span style="color:#66d9ef">uint8</span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// buckets（桶）的对数log_2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">noverflow</span> <span style="color:#66d9ef">uint16</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 溢出桶的大概数量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">hash0</span>     <span style="color:#66d9ef">uint32</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 哈希种子
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">buckets</span>    <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 指向buckets数组的指针，数组大小为2^B，如果元素个数为0，它为nil。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">oldbuckets</span> <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果发生扩容，oldbuckets是指向老的buckets数组的指针，老的buckets数组大小是新的buckets的1/2;非扩容状态下，它为nil。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">nevacuate</span>  <span style="color:#66d9ef">uintptr</span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 表示扩容进度，小于此地址的buckets代表已搬迁完成。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">extra</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">mapextra</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 这个字段是为了优化GC扫描而设计的。当key和value均不包含指针，并且都可以inline时使用。extra是指向mapextra类型的指针。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> }
+</span></span></code></pre></div><h2 id="bmap结构体">bmap结构体</h2>
 <p><code>bmap</code> 就是我们常说的“桶”，一个桶里面会最多装 8 个 key，这些 key 之所以会落入同一个桶，是因为它们经过哈希计算后，哈希结果是“一类”的，关于key的定位我们在map的查询和插入中详细说明。在桶内，又会根据 key 计算出来的 hash 值的高 8 位来决定 key 到底落入桶内的哪个位置（一个桶内最多有8个位置)。</p>
 <pre tabindex="0"><code>// A bucket for a Go map.
 type bmap struct {
@@ -535,7 +535,7 @@ dataOffset = unsafe.Offsetof(struct{
 </table>
 <p>我们只用研究最一般的赋值函数 <code>mapassign</code>。</p>
 <h4 id="赋值流程">赋值流程</h4>
-<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片"></p>
+<p><img src="/images/640-20220406104542934.png" alt="图片"></p>
 <p>map的赋值会附带着map的扩容和迁移，map的扩容只是将底层数组扩大了一倍，并没有进行数据的转移，数据的转移是在扩容后逐步进行的，在迁移的过程中每进行一次赋值（access或者delete）会至少做一次迁移工作。</p>
 <h4 id="校验和初始化">校验和初始化</h4>
 <p>1.判断map是否为nil</p>
@@ -653,47 +653,47 @@ if !evacuated(b) {
 </code></pre><ol>
 <li>如果没有被转移，那就要迁移数据了。数据迁移时，可能是迁移到大小相同的buckets上，也可能迁移到2倍大的buckets上。这里xy 都是标记目标迁移位置的标记：x 标识的是迁移到相同的位置，y 标识的是迁移到2倍大的位置上。我们先看下目标位置的确定：</li>
 </ol>
-<pre tabindex="0"><code>var xy [2]evacDst
-x := &amp;xy[0]
-x.b = (*bmap)(add(h.buckets, oldbucket*uintptr(t.bucketsize)))
-x.k = add(unsafe.Pointer(x.b), dataOffset)
-x.v = add(x.k, bucketCnt*uintptr(t.keysize))
-if !h.sameSizeGrow() {
-  // 如果是2倍的大小，就得算一次 y 的值
-  y := &amp;xy[1]
-  y.b = (*bmap)(add(h.buckets, (oldbucket+newbit)*uintptr(t.bucketsize)))
-  y.k = add(unsafe.Pointer(y.b), dataOffset)
-  y.v = add(y.k, bucketCnt*uintptr(t.keysize))
-}
-</code></pre><ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">xy</span> [<span style="color:#ae81ff">2</span>]<span style="color:#a6e22e">evacDst</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">xy</span>[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">b</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">bmap</span>)(<span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">buckets</span>, <span style="color:#a6e22e">oldbucket</span><span style="color:#f92672">*</span>uintptr(<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">bucketsize</span>)))
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">k</span> = <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">b</span>), <span style="color:#a6e22e">dataOffset</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">v</span> = <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">k</span>, <span style="color:#a6e22e">bucketCnt</span><span style="color:#f92672">*</span>uintptr(<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">keysize</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">sameSizeGrow</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 如果是2倍的大小，就得算一次 y 的值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">y</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">xy</span>[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">y</span>.<span style="color:#a6e22e">b</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">bmap</span>)(<span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">buckets</span>, (<span style="color:#a6e22e">oldbucket</span><span style="color:#f92672">+</span><span style="color:#a6e22e">newbit</span>)<span style="color:#f92672">*</span>uintptr(<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">bucketsize</span>)))
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">y</span>.<span style="color:#a6e22e">k</span> = <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#a6e22e">y</span>.<span style="color:#a6e22e">b</span>), <span style="color:#a6e22e">dataOffset</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">y</span>.<span style="color:#a6e22e">v</span> = <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">y</span>.<span style="color:#a6e22e">k</span>, <span style="color:#a6e22e">bucketCnt</span><span style="color:#f92672">*</span>uintptr(<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">keysize</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol>
 <li>确定bucket位置后，需要按照kv 一条一条做迁移。</li>
 <li>如果当前搬迁的bucket 和 总体搬迁的bucket的位置是一样的，我们需要更新总体进度的标记 nevacuate</li>
 </ol>
-<pre tabindex="0"><code>// newbit 是oldbuckets 的长度，也是nevacuate 的重点
-func advanceEvacuationMark(h *hmap, t *maptype, newbit uintptr) {
-  // 首先更新标记
-  h.nevacuate++
-
-  // 最多查看2^10 个bucket
-  stop := h.nevacuate + 1024
-  if stop &gt; newbit {
-    stop = newbit
-  }
-
-  // 如果没有搬迁就停止了，等下次搬迁
-  for h.nevacuate != stop &amp;&amp; bucketEvacuated(t, h, h.nevacuate) {
-    h.nevacuate++
-  }
-
-  // 如果都已经搬迁完了，oldbukets 完全搬迁成功，清空oldbuckets
-  if h.nevacuate == newbit {
-    h.oldbuckets = nil
-    if h.extra != nil {
-      h.extra.oldoverflow = nil
-    }
-    h.flags &amp;^= sameSizeGrow
-  }
-</code></pre><h2 id="遍历">遍历</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// newbit 是oldbuckets 的长度，也是nevacuate 的重点
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">advanceEvacuationMark</span>(<span style="color:#a6e22e">h</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">hmap</span>, <span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">maptype</span>, <span style="color:#a6e22e">newbit</span> <span style="color:#66d9ef">uintptr</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 首先更新标记
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">nevacuate</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 最多查看2^10 个bucket
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">stop</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">nevacuate</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1024</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">stop</span> &gt; <span style="color:#a6e22e">newbit</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">stop</span> = <span style="color:#a6e22e">newbit</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 如果没有搬迁就停止了，等下次搬迁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">nevacuate</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">stop</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">bucketEvacuated</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">h</span>, <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">nevacuate</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">nevacuate</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 如果都已经搬迁完了，oldbukets 完全搬迁成功，清空oldbuckets
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">nevacuate</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">newbit</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">oldbuckets</span> = <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">extra</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">extra</span>.<span style="color:#a6e22e">oldoverflow</span> = <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">flags</span> <span style="color:#f92672">&amp;^=</span> <span style="color:#a6e22e">sameSizeGrow</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></div><h2 id="遍历">遍历</h2>
 <p>遍历的过程，就是按顺序遍历 bucket，同时按顺序遍历 bucket 中的 key。</p>
 <p>map遍历是无序的，如果想实现有序遍历，可以先对key进行排序</p>
 <p>为什么遍历 map 是无序的？</p>

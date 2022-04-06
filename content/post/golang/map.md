@@ -26,7 +26,7 @@ Go中的map是一个指针，占用8个字节，指向hmap结构体;  源码`src
 
 ## hmap结构体 
 
-```
+```go
 // A header for a Go map.
 type hmap struct {
     count     int 
@@ -463,7 +463,7 @@ mapassign 有一个系列的函数，根据 key 类型的不同，编译器会�
 
 #### 赋值流程
 
-![图片](data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==)
+![图片](/images/640-20220406104542934.png)
 
 map的赋值会附带着map的扩容和迁移，map的扩容只是将底层数组扩大了一倍，并没有进行数据的转移，数据的转移是在扩容后逐步进行的，在迁移的过程中每进行一次赋值（access或者delete）会至少做一次迁移工作。
 
@@ -636,7 +636,7 @@ func evacuated(b *bmap) bool {
 
 1. 如果没有被转移，那就要迁移数据了。数据迁移时，可能是迁移到大小相同的buckets上，也可能迁移到2倍大的buckets上。这里xy 都是标记目标迁移位置的标记：x 标识的是迁移到相同的位置，y 标识的是迁移到2倍大的位置上。我们先看下目标位置的确定：
 
-```
+```go
 var xy [2]evacDst
 x := &xy[0]
 x.b = (*bmap)(add(h.buckets, oldbucket*uintptr(t.bucketsize)))
@@ -654,7 +654,7 @@ if !h.sameSizeGrow() {
 1. 确定bucket位置后，需要按照kv 一条一条做迁移。
 2. 如果当前搬迁的bucket 和 总体搬迁的bucket的位置是一样的，我们需要更新总体进度的标记 nevacuate
 
-```
+```go
 // newbit 是oldbuckets 的长度，也是nevacuate 的重点
 func advanceEvacuationMark(h *hmap, t *maptype, newbit uintptr) {
   // 首先更新标记

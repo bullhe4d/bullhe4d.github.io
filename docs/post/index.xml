@@ -14,7 +14,7 @@
       
       <guid>https://blog.diudiu.love/post/golang/map/</guid>
       <description>面试题  map的底层实现原理 为什么遍历map是无序的？ 如何实现有序遍历map？ 为什么Go map是非线程安全的？ 线程安全的map如何实现? Go sync.map 和原生 map 谁的性能好，为什么？ 为什么 Go map 的负载因子是 6.5？ map扩容策略是什么?  实现原理 Go中的map是一个指针，占用8个字节，指向hmap结构体; 源码src/runtime/map.go中可以看到map的底层结构
-每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构hmap结构体 // A header for a Go map. type hmap struct { count int // 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。 flags uint8 // 状态标志，下文常量中会解释四种状态位含义。 B uint8 // buckets（桶）的对数log_2 // 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶 noverflow uint16 // 溢出桶的大概数量 hash0 uint32 // 哈希种子 buckets unsafe.Pointer // 指向buckets数组的指针，数组大小为2^B，如果元素个数为0，它为nil。 oldbuckets unsafe.Pointer // 如果发生扩容，oldbuckets是指向老的buckets数组的指针，老的buckets数组大小是新的buckets的1/2;非扩容状态下，它为nil。 nevacuate uintptr // 表示扩容进度，小于此地址的buckets代表已搬迁完成。 extra *mapextra // 这个字段是为了优化GC扫描而设计的。当key和value均不包含指针，并且都可以inline时使用。extra是指向mapextra类型的指针。 } bmap结构体 bmap 就是我们常说的“桶”，一个桶里面会最多装 8 个 key，这些 key 之所以会落入同一个桶，是因为它们经过哈希计算后，哈希结果是“一类”的，关于key的定位我们在map的查询和插入中详细说明。在桶内，又会根据 key 计算出来的 hash 值的高 8 位来决定 key 到底落入桶内的哪个位置（一个桶内最多有8个位置)。</description>
+每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构hmap结构体 // A header for a Go map. type hmap struct {  count int  // 代表哈希表中的元素个数，调用len(map)时，返回的就是该字段值。  flags uint8  // 状态标志，下文常量中会解释四种状态位含义。  B uint8  // buckets（桶）的对数log_2  // 如果B=5，则buckets数组的长度 = 2^5=32，意味着有32个桶  noverflow uint16  // 溢出桶的大概数量  hash0 uint32  // 哈希种子   buckets unsafe.</description>
     </item>
     
     <item>
