@@ -174,7 +174,7 @@
 </ol>
 <h1 id="实现原理">实现原理</h1>
 <p>Go中的map是一个指针，占用8个字节，指向hmap结构体;  源码<code>src/runtime/map.go</code>中可以看到map的底层结构</p>
-<p>每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构<img src="../../../static/images/640-20220406103230437.png" alt="图片"></p>
+<p>每个map的底层结构是hmap，hmap包含若干个结构为bmap的bucket数组。每个bucket底层都采用链表结构。接下来，我们来详细看下map的结构<img src="/images/640-20220406103230437.png" alt="图片"></p>
 <h2 id="hmap结构体">hmap结构体</h2>
 <pre tabindex="0"><code>// A header for a Go map.
 type hmap struct {
@@ -391,7 +391,7 @@ func mapAppend(m map[string]int, key string, val int) {
 }
 </code></pre><p>map的创建通过生成汇编码可以知道，make创建map时调用的底层函数是<code>runtime.makemap</code>。如果你的map初始容量小于等于8会发现走的是<code>runtime.fastrand</code>是因为容量小于8时不需要生成多个桶，一个桶的容量就可以满足</p>
 <h4 id="创建流程">创建流程</h4>
-<p><img src="../../../static/images/640.png" alt="图片"></p>
+<p><img src="/images/640.png" alt="图片"></p>
 <p>makemap函数会通过 <code>fastrand</code> 创建一个随机的哈希种子，然后根据传入的 <code>hint</code> 计算出需要的最小需要的桶的数量，最后再使用 <code>makeBucketArray</code>创建用于保存桶的数组，这个方法其实就是根据传入的 <code>B</code> 计算出的需要创建的桶数量在内存中分配一片连续的空间用于存储数据，在创建桶的过程中还会额外创建一些用于保存溢出数据的桶，数量是 <code>2^(B-4)</code> 个。初始化完成返回hmap指针。</p>
 <h4 id="计算b的初始值">计算B的初始值</h4>
 <p>找到一个 B，使得 map 的装载因子在正常范围内</p>
@@ -452,7 +452,7 @@ if ok {
 </tbody>
 </table>
 <h4 id="查找流程">查找流程</h4>
-<p><img src="../../../static/images/640-20220406103230220.png" alt="图片"></p>
+<p><img src="/images/640-20220406103230220.png" alt="图片"></p>
 <h4 id="写保护监测">写保护监测</h4>
 <p>函数首先会检查 map 的标志位 flags。如果 flags 的写标志位此时被置 1 了，说明有其他协程在执行“写”操作，进而导致程序 panic。这也说明了 map 对协程是不安全的。</p>
 <pre tabindex="0"><code>if h.flags&amp;hashWriting != 0 {
@@ -491,7 +491,7 @@ func tophash(hash uintptr) uint8 {
  return top
 }
 </code></pre><p>用上一步哈希值哈希值的高8个bit 位，也就是<code>10010111</code>，转化为十进制，也就是151，在 10 号 bucket 中寻找** tophash 值（HOB hash）为 151* 的 槽位**，即为key所在位置，找到了 2 号槽位，这样整个查找过程就结束了。</p>
-<p><img src="../../../static/images/640-20220406103230754.png" alt="图片"></p>
+<p><img src="/images/640-20220406103230754.png" alt="图片"></p>
 <p>如果在 bucket 中没找到，并且 overflow 不为空，还要继续去 overflow bucket 中寻找，直到找到或是所有的 key 槽位都找遍了，包括所有的 overflow bucket。</p>
 <h4 id="返回key对应的指针">返回key对应的指针</h4>
 <p>通过上面找到了对应的槽位，这里我们再详细分析下key/value值是如何获取的：</p>
