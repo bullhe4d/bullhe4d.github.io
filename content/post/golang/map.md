@@ -1,10 +1,11 @@
 ---
 title: "彻底理解Golang Map"
 date: 2022-04-06T10:31:58+08:00
+typora-root-url: ../../../static
 ---
 
 
-![图片](../../../static/images/640-20220406103230405.png)
+![图片](/images/640-20220406103230405.png)
 
 # 面试题 
 
